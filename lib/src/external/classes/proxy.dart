@@ -4,9 +4,11 @@ import 'dart:js_interop';
 import 'package:js/js.dart' as js;
 import 'dart:js_util' as js;
 
-typedef OnApplyProxy<T> = T Function(JSFunction target, JSObject thisArg, List<dynamic> arguments);
+typedef OnApplyProxy<T> = T Function(JSFunction target, dynamic thisArg, List<dynamic> arguments);
 typedef OnConstructProxy = JSObject Function(JSObject target, List<dynamic> arguments, JSObject newTarget);
-typedef OnDefinePropertyProxy = bool Function(JSObject target, dynamic key, JSObject descriptor);
+typedef OnDefinePropertyProxy = bool Function(JSObject target, dynamic property, JSObject descriptor);
+typedef OnDeletePropertyProxy = bool Function(JSObject target, dynamic property);
+typedef OnGetProxy = dynamic Function(JSObject target, dynamic property, dynamic receiver);
 typedef OnSetProxy = bool Function(JSObject target, Object property, dynamic value, dynamic receiver);
 
 @js.JS()
@@ -35,13 +37,15 @@ class ProxyHandler {
   final OnApplyProxy? apply;
   final OnConstructProxy? construct;
   final OnDefinePropertyProxy? defineProperty;
+  final OnDeletePropertyProxy? deleteProperty;
+  final OnGetProxy? get;
   final OnSetProxy? set;
   const ProxyHandler({
     this.apply,
     this.construct,
     this.defineProperty,
-    // this.deleteProperty,
-    // this.get,
+    this.deleteProperty,
+    this.get,
     // this.getOwnPropertyDescriptor,
     // this.getPrototypeOf,
     // this.has,
@@ -60,6 +64,10 @@ class ProxyHandler {
         'construct': allowInterop(construct!),
       if(defineProperty != null)
         'defineProperty': allowInterop(defineProperty!),
+      if(deleteProperty != null)
+        'deleteProperty': allowInterop(deleteProperty!),
+      if(get != null)
+        'get': allowInterop(get!),
       if(set != null)
         'set': allowInterop(set!),
     });
