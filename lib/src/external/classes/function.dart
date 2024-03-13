@@ -17,6 +17,12 @@ extension JSFunctionExtension on JSFunction {
   //     dynamic arg9,
   // ]);
 
+  dynamic bind(dynamic thisArg, List<dynamic> argsArray) {
+    // const hack = '__dart_hack';
+    // setProperty(jsWindow, hack, this);
+    return callMethod(this, 'bind', [thisArg, ...argsArray]);
+  }
+
   dynamic call(List<dynamic> argsArray) {
     const hack = '__dart_hack';
     setProperty(jsWindow, hack, this);
