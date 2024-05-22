@@ -1,4 +1,6 @@
 import 'dart:js_interop';
 
-@JS('window')
+import 'package:js/js.dart' as js;
+
+@js.JS('window')
 external JSObject jsWindow;

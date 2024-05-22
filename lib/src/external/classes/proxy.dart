@@ -1,5 +1,7 @@
 import 'dart:js';
 import 'dart:js_interop';
+
+import 'package:js/js.dart' as js;
 import 'dart:js_util' as js;
 
 typedef OnApplyProxy<T> = T Function(JSFunction target, dynamic thisArg, List<dynamic> arguments);
@@ -9,7 +11,7 @@ typedef OnDeletePropertyProxy = bool Function(JSObject target, dynamic property)
 typedef OnGetProxy = dynamic Function(JSObject target, dynamic property, dynamic receiver);
 typedef OnSetProxy = bool Function(JSObject target, Object property, dynamic value, dynamic receiver);
 
-@JS()
+@js.JS()
 class Proxy {
   factory Proxy(JSObject object, ProxyHandler handler)
     => Proxy._Proxy(object, handler.jsify());
@@ -25,7 +27,7 @@ class Proxy {
   external static JSObject _revocable(dynamic object, dynamic handler);
 }
 
-@JS()
+@js.JS()
 class ProxyRevocable {
   external Proxy proxy;
   external void revoke();
