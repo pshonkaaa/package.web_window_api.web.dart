@@ -1,9 +1,8 @@
 import 'dart:js_interop';
 
-import 'package:js/js.dart' as js;
 import 'package:web_window_api/src/external/functions.dart';
 
-@js.JS('Object')
+@JS('Object')
 class InternalJSObject {
   static JSObject defineProperty(JSObject object, Object prop, JSObjectDescriptor descriptor) {
     return _defineProperty(object, prop, descriptor.jsify());

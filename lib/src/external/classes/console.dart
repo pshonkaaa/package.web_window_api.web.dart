@@ -1,6 +1,6 @@
-import 'package:js/js.dart' as js;
+import 'dart:js_interop';
 
-@js.JS()
+@JS()
 class Console {
   external void log(dynamic value);
 }
